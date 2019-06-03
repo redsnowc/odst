@@ -1,0 +1,43 @@
+{% extends "admin/admin_base.html" %}
+{% from "macros.html" import render_csrf_form %}
+
+{% block admin %}
+    <div class="page-header">
+        <h1>
+            <svg class="icon" aria-hidden="true" style="font-size: 55px">
+                <use xlink:href="#iconother"></use>
+            </svg>
+            <small class="text-muted">{{ links|length }}</small>
+            <span class="float-right">
+                <a class="btn btn-primary btn-sm" href="{{ url_for('web.new_link') }}">新增</a>
+            </span>
+        </h1>
+    </div>
+    {% if links %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>链接描述</th>
+                <th>URL</th>
+                <th>标签</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            {% for link in links %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ link.name }}</td>
+                    <td><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></td>
+                    <td>{{ link.tag }}</td>
+                    <td>
+                        <a class="btn btn-info btn-sm" href="{{ url_for('web.edit_link', link_id=link.id) }}">编辑</a>
+                        {{ render_csrf_form('inline', 'web.delete_link', 'danger', '删除', link_id=link.id) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <div class="tip"><h5>暂无链接</h5></div>
+    {% endif %}
+{% endblock %}

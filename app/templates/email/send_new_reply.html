@@ -1,0 +1,7 @@
+<p>亲爱的 {{ comment.author }}，你在 “{{ comment.post.title }}” 中发表的评论有新的回复，请及时查看</p>
+<p>点击<a href="{{ url_for('web.show_post', post_id=comment.post_id, _external=True) + '#comments' }}">这里</a>查看</p>
+<p>如果无法点击，你也可以将下面的地址赋值到浏览器中打开：</p>
+<p>{{ url_for('web.show_post', post_id=comment.post_id, _external=Ture) + '#comments' }}</p>
+<p>
+    <small>注意，此邮件为服务器自动发送，请不要回复该邮件</small>
+</p>

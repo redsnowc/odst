@@ -1,0 +1,41 @@
+{% from 'macros.html' import iconfont_style %}
+
+{% if posts %}
+    {% for post in posts %}
+        <h3 class="text-primary">
+            <a href="{{ url_for('web.show_post', post_id=post.id) }}">
+                {{ post.title }}
+            </a>
+        </h3>
+        <p>
+            {{ post.body|striptags|truncate }}
+            <small><a href="{{ url_for('web.show_post', post_id=post.id) }}">Read More</a></small>
+        </p>
+        <small>
+            <svg class="icon" aria-hidden="true" style="font-size: 20px">
+                <use xlink:href="#iconcomment"></use>
+            </svg>
+            <a href="#">{{ post.comments|length }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <svg class="icon" aria-hidden="true" style="font-size: 20px">
+                <use xlink:href="#icontag"></use>
+            </svg>
+            <a href="{{ url_for('web.show_category', name=post.category.name) }}">{{ post.category.name }}</a>
+            <span class="float-right">
+                <svg class="icon" aria-hidden="true" style="font-size: 20px">
+                    <use xlink:href="#iconclock"></use>
+                </svg>
+                {{ moment(post.timestamp).format('LL') }}
+            </span>
+        </small>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <div class="tip">
+        <h5>No Posts.</h5>
+        {% if current_user.is_authenticated %}
+            <a href="#">撰写文章</a>
+        {% endif %}
+    </div>
+{% endif %}

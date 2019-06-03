@@ -1,0 +1,17 @@
+{% extends "admin/admin_base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block admin %}
+    <div class="page-header">
+        <h1>
+            <svg class="icon" aria-hidden="true" style="font-size: 55px">
+                <use xlink:href="#icondraw"></use>
+            </svg>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {{ render_form(form) }}
+        </div>
+    </div>
+{% endblock %}

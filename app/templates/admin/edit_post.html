@@ -1,0 +1,17 @@
+{% extends "admin/admin_base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block admin %}
+    <div class="page-header">
+        <svg class="icon" aria-hidden="true" style="font-size: 55px">
+            <use xlink:href="#icondraw"></use>
+        </svg>
+    </div>
+    {{ render_form(form) }}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
+    {{ ckeditor.config(name='body', height=800) }}
+{% endblock %}

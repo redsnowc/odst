@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>
+            <svg class="icon" aria-hidden="true" style="font-size: 55px">
+                <use xlink:href="#iconsearch"></use>
+            </svg>
+            {{ q }}
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+        {% if results %}
+            {% for result in results %}
+                <h3 class="text-primary">
+                    <a href="{{ url_for('web.show_post', post_id=result.id) }}">
+                        {{ result.title.replace(q, '<font color=\"red\">'+q+'</font>')|safe }}
+                    </a>
+                </h3>
+                <p>
+                    {{ result.body|truncate|striptags|replace('q', '<font color=\"red\">'+q+'</font>') }}
+                    <small><a href="{{ url_for('web.show_post', post_id=result.id) }}">Read More</a></small>
+                </p>
+            {% endfor %}
+            {{ render_pagination(pagination) }}
+        {% endif %}
+        </div>
+        <div class="col-sm-4 sidebar">
+            {% include "blog/_sidebar.html" %}
+        </div>
+    </div>
+{% endblock %}

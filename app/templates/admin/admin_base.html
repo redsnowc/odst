@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_nav_item_admin %}
+
+{% block title %}后台 | {{ admin.blog_title }}{% endblock %}
+
+{% block content %}
+    <br>
+    <ul class="nav nav-tabs">
+        {{ render_nav_item_admin('web.manage_posts', '文章') }}
+        {{ render_nav_item_admin('web.manage_categories', '分类') }}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                评论
+                {% if unread_comments %}
+                    <span class="badge badge-light" style="">New</span>
+                {% endif %}
+            </a>
+            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+                <a class="dropdown-item" href="{{ url_for('web.manage_comments', filter='all') }}">全部评论</a>
+                <a class="dropdown-item" href="{{ url_for('web.manage_comments', filter='unread') }}">
+                    未读评论
+                    {% if unread_comments %}
+                        <span class="badge badge-light"> {{ unread_comments }}</span>
+                    {% endif %}
+                </a>
+                <a class="dropdown-item" href="{{ url_for('web.manage_comments', filter='admin') }}">你的评论</a>
+            </div>
+        </li>
+        {{ render_nav_item_admin('web.manage_links', '链接') }}
+        {{ render_nav_item_admin('web.manage_settings', '博客设置') }}
+    </ul>
+    {% block admin %}{% endblock %}
+{% endblock %}

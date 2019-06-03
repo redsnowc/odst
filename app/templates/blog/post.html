@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'macros.html' import render_csrf_form %}
+
+{% block css %}
+    {{ super() }}
+    <link  rel="stylesheet" type="text/css" href="{{url_for('static',filename='ckeditor/plugins/codesnippet/lib/highlight/styles/default.css')}}" >
+{% endblock %}
+
+{% block title %}{{ post.title }} | {{ admin.blog_title }}{% endblock %}
+{% block content %}
+    <div class="page-header">
+        <h1>{{ post.title }}
+            <span class="float-right">
+                {% if current_user.is_authenticated %}
+                    <a class="btn btn-info btn-sm" href="{{ url_for('web.edit_post', post_id=post.id) }}">编辑</a>
+                    {{ render_csrf_form('inline', 'web.delete_post', 'danger', '删除', post_id=post.id, next=url_for('web.index')) }}
+                {% endif %}
+            </span>
+        </h1>
+        <small>
+            <svg class="icon" aria-hidden="true" style="font-size: 20px">
+                <use xlink:href="#icontag"></use>
+            </svg>&nbsp;
+            <a href="{{ url_for('web.show_category', name=post.category.name) }}">{{ post.category.name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <svg class="icon" aria-hidden="true" style="font-size: 20px">
+                <use xlink:href="#iconclock"></use>
+            </svg>&nbsp;
+            {{ moment(post.timestamp).format('LL') }}
+        </small>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            {{ post.body|safe }}
+            <div class="comments" id="comments">
+                <h3>
+                    <svg class="icon" aria-hidden="true" style="font-size: 33px">
+                        <use xlink:href="#iconcomment"></use>
+                    </svg>
+                    {{ pagination.total }}
+                    <small>
+                        {% if pagination.total > 15 %}
+                            <a href="{{ url_for('web.show_post', post_id=post.id, page=pagination.pages or 1) }}#comments">
+                                查看最新评论
+                            </a>
+                        {% endif %}
+                    </small>
+                    {% if current_user.is_authenticated %}
+                        {% if post.can_comment %}
+                            {{ render_csrf_form('float-right', 'web.set_comment', 'warning', '关闭评论', post_id=post.id) }}
+                        {% else %}
+                            {{ render_csrf_form('float-right', 'web.set_comment', 'warning', '开启评论', post_id=post.id) }}
+                        {% endif %}
+                    {% endif %}
+                </h3>
+                {% if comments %}
+                    <ul class="list-group">
+                        {% for comment in comments %}
+                            <li class="list-group-item list-group-item-action flex-column">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">
+                                        <a href="{% if comment.site %}{{ comment.site }}{% else %}#{% endif %}"
+                                           target="_blank">
+                                            {% if comment.from_admin %}
+                                                {{ admin.name }}
+                                            {% else %}
+                                                {{ comment.author }}
+                                            {% endif %}
+                                        </a>
+                                        {% if comment.from_admin %}
+                                            <span class="badge badge-primary">作者</span>
+                                        {% endif %}
+                                        {% if comment.replied %}
+                                            <span class="badge badge-light">回复</span>
+                                        {% endif %}
+                                    </h5>
+                                    <small data-toggle="tooltip" data-placement="top" data-delag="500"
+                                           data-timestamp="{{ comment.timestamp.strftime('%Y-%m-%dT%H:%M:%SZ') }}">
+                                        {{ moment(comment.timestamp).fromNow() }}
+                                    </small>
+                                </div>
+                                {% if comment.replied %}
+                                    <p class="alert alert-light reply-body">
+                                        {{ comment.replied.author }}:<br>
+                                        {{ comment.replied.body }}
+                                    </p>
+                                {% endif %}
+                                <p class="mb-1">{{ comment.body }}</p>
+                                <div class="float-right">
+                                    <a class="btn btn-light btn-sm"
+                                       href="{{ url_for('web.reply_comment', comment_id=comment.id) }}">回复
+                                    </a>
+                                    {% if current_user.is_authenticated %}
+                                        <a class="btn btn-light btn-sm" href="mailto:{{ comment.email }}">邮件</a>
+                                        {{ render_csrf_form('inline', 'web.delete_comment', 'danger', '删除', comment_id=comment.id) }}
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            {% if comments %}
+                {{ render_pagination(pagination, fragment='#comments') }}
+            {% endif %}
+            {% if request.args.get('reply') %}
+                <div class="alert alert-dark">
+                    回复 <strong>{{ request.args.get('author') }}</strong>:
+                    <a class="float-right" href="{{ url_for('web.show_post', post_id=post.id) }}">取消</a>
+                </div>
+            {% endif %}
+            {% if post.can_comment %}
+                <div id="comment-form">
+                    {{ render_form(form, action=request.full_path) }}
+                </div>
+            {% else %}
+                <div class="tip"><h5>评论已关闭</h5></div>
+            {% endif %}
+        </div>
+        <div class="col-sm-4 sidebar">
+            {% include "blog/_sidebar.html" %}
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ce7ecfd2eb555d4"></script>
+    <script src="{{url_for('static',filename='ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js')}}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="{{ url_for('static', filename='js/bootstrap-validate.js') }}"></script>
+    <script>
+        bootstrapValidate('#author', 'min:2:昵称长度 2 - 30');
+        bootstrapValidate('#author', 'max:30:昵称长度 2 - 30');
+        bootstrapValidate('#email', 'email:邮箱输入有误');
+        bootstrapValidate('#email', 'min:8:邮箱长度最小为 8');
+        bootstrapValidate('#email', 'max:64:邮箱长度最大为 64');
+        bootstrapValidate('#site', 'url:URL输入有误');
+        bootstrapValidate('#body', 'min:2:评论长度最少为 2')
+    </script>
+{% endblock %}

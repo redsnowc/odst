@@ -1,2 +1,2 @@
 # odst
-基于 Flask 和 Bootstrap 的轻量博客
+基于 Flask 与 Bootstrap 的轻量博客

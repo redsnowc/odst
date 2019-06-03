@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+coverage = "*"
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+faker = "*"
+click = "*"
+cymysql = "*"
+flask-moment = "*"
+flask-mail = "*"
+flask-ckeditor = "*"
+flask-wtf = "*"
+flask-whooshee = "*"
+flask-login = "*"
+python-dotenv = "*"
+bootstrap-flask = "*"
+flask-debugtoolbar = "*"
+sentry-sdk = {extras = ["flask"],version = "==0.8.0"}
+flask-migrate = "*"
+
+[requires]
+python_version = "3.7"

@@ -1,0 +1,44 @@
+{% extends "admin/admin_base.html" %}
+{% from 'macros.html' import render_csrf_form %}
+
+{% block admin %}
+    <div class="page-header">
+        <h1>
+            <svg class="icon" aria-hidden="true" style="font-size: 55px">
+                <use xlink:href="#icontag"></use>
+            </svg>
+            <small class="text-muted">{{ categories|length }}</small>
+            <span class="float-right">
+                <a class="btn btn-primary btn-sm" href="{{ url_for('web.new_category') }}">新增</a>
+            </span>
+        </h1>
+    </div>
+    {% if categories %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>名称</th>
+                <th>文章数量</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ url_for('web.show_category', name=category.name) }}">{{ category.name }}</a></td>
+                    <td>{{ category.posts|length }}</td>
+                    <td>
+                        {% if category.id != 1 %}
+                            <a class="btn btn-info btn-sm" href="{{ url_for('web.edit_category', category_id=category.id) }}">编辑</a>
+                            {{ render_csrf_form('inline', 'web.delete_category', 'danger', '删除', category_id=category.id) }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p class="text-muted">注意：删除分类并不会将分类下文章删除，而是会将其移动至默认分类，故默认分类是无法改动的。</p>
+    {% else %}
+        <div class="tip"><h5>No categories</h5></div>
+    {% endif %}
+{% endblock %}

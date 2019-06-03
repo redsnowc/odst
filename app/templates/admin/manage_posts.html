@@ -1,0 +1,49 @@
+{% extends "admin/admin_base.html" %}
+{% from "macros.html" import render_csrf_form %}
+
+{% from "bootstrap/pagination.html" import render_pagination %}
+
+{% block admin %}
+    <div class="page-header">
+        <h1>
+            <svg class="icon" aria-hidden="true" style="font-size: 55px">
+                <use xlink:href="#iconnotebook"></use>
+            </svg>
+            <small class="text-muted">{{ pagination.total }}</small>
+            <span class="float-right">
+                <a class="btn btn-primary btn-sm" href="{{ url_for('web.new_post') }}">新增</a>
+            </span>
+        </h1>
+    </div>
+    {% if posts %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>标题</th>
+                    <th>分类</th>
+                    <th>日期</th>
+                    <th>评论</th>
+                    <th>字数</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ loop.index + ((pagination.page - 1) * config.BLOG_MANAGE_POST_PER_PAGE) }}</td>
+                    <td><a href="{{ url_for('web.show_post', post_id=post.id) }}">{{ post.title }}</a></td>
+                    <td><a href="{{ url_for('web.show_category', name=post.category.name) }}">{{ post.category.name }}</a></td>
+                    <td>{{ moment(post.timestamp).format('LL') }}</td>
+                    <td><a href="{{ url_for('web.show_post', post_id=post.id) }}#comments">{{ post.comments|length }}</a></td>
+                    <td>{{ post.body|length }}</td>
+                    <td><a class="btn btn-info btn-sm" href="{{ url_for('web.edit_post', post_id=post.id) }}">编辑</a>
+                        {{ render_csrf_form('inline', 'web.delete_post', 'danger', '删除', post_id=post.id) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="page-footer">{{ render_pagination(pagination) }}</div>
+    {% else %}
+        <div class="tip"><h5>暂无文章</h5></div>
+    {% endif %}
+{% endblock %}

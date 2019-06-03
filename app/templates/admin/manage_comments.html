@@ -1,0 +1,56 @@
+{% extends "admin/admin_base.html" %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+{% from 'macros.html' import render_csrf_form %}
+
+{% block admin %}
+    <div class="page-header">
+        <h1>
+            <svg class="icon" aria-hidden="true" style="font-size: 55px">
+                <use xlink:href="#iconcomment"></use>
+            </svg>
+            <small class="text-muted">{{ pagination.total }}</small>
+        </h1>
+    </div>
+    {% if comments %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>昵称</th>
+                <th>内容</th>
+                <th>日期</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            {% for comment in comments %}
+                <tr {% if not comment.reviewed %}class="table-warning"{% endif %}>
+                    <td>{{ loop.index + ((pagination.page - 1) * config['BLOG_COMMENT_PER_PAGE']) }}</td>
+                    <td>
+                        {% if comment.from_admin %}{{ admin.name }}{% else %}{{ comment.author }}{% endif %}
+                        {% if comment.from_admin %}
+                            <span class="badge badge-primary">作者</span>
+                        {% endif %}<br>
+                        {% if comment.site %}
+                            <a href="{{ comments.site }}" target="_blank">
+                                {{ comment.site }}
+                            </a><br>
+                        {% endif %}
+                        <a href="mailto:{{ comment.email }}">{{ comment.email }}</a>
+                    </td>
+                    <td>{{ comment.body }}</td>
+                    <td>{{ moment(comment.timestamp).format('LLL') }}</td>
+                    <td>
+                        {% if not comment.reviewed %}
+                            {{ render_csrf_form('inline', 'web.approve_comment', 'success', '发布', comment_id=comment.id) }}
+                        {% endif %}
+                        <a class="btn btn-info btn-sm" href="{{ url_for('web.show_post', post_id=comment.post.id) }}">文章</a>
+                        {{ render_csrf_form('inline', 'web.delete_comment', 'danger', '删除', comment_id=comment.id) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="page-footer">{{ render_pagination(pagination) }}</div>
+    {% else %}
+        <div class="tip"><h5>暂无评论</h5></div>
+    {% endif %}
+{% endblock %}

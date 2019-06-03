@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block css %}
+    {{ super() }}
+{% endblock %}
+
+{% block title %}{{ admin.blog_title }}{% endblock %}
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid" style="background-image: url('{{ url_for('static', filename='images/index_image.jpg') }}')">
+        <div class="container-fluid">
+            <h1 class="display-3">{{ admin.blog_title }}</h1>
+            <p class="lead">{{ admin.blog_sub_title }}</p>
+            <hr class="my-4">
+            <p>如果你也喜欢这个博客，可以点击下方按钮尝试自己搭建。</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p>
+        </div>
+    </div><br>
+    <div class="row">
+        <div class="col-sm-8">
+            {% include 'blog/_posts.html' %}
+            {% if posts %}
+                <br>
+                <br>
+                <div class="page-footer">{{ render_pagination(pagination) }}</div>
+            {% endif %}
+        </div>
+        <div class="col-sm-4 sidebar">
+            {% include 'blog/_sidebar.html' %}
+        </div>
+    </div>
+{% endblock %}
