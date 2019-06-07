@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d0973a7bcb08d993292dcd102ac87db899e5a690390f264f90576ba26e536404"
+            "sha256": "0507dc8ffda27377474e6d3200b3a7523a6ab616aa0bcbf3043723c70a7ff724"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -143,6 +143,14 @@
             "index": "pypi",
             "version": "==0.14.2"
         },
+        "gunicorn": {
+            "hashes": [
+                "sha256:aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471",
+                "sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"
+            ],
+            "index": "pypi",
+            "version": "==19.9.0"
+        },
         "itsdangerous": {
             "hashes": [
                 "sha256:321b033d07f2a4136d3ec762eac9f16a10ccd60f53c0c91af90217ace7ba1f19",
@@ -159,9 +167,9 @@
         },
         "mako": {
             "hashes": [
-                "sha256:889c7f16d5388092d4c585cf9def19cad089e9f848a7c40e03394553048362a6"
+                "sha256:0cfa65de3a835e87eeca6ac856b3013aade55f49e32515f65d999f91a2324162"
             ],
-            "version": "==1.0.11"
+            "version": "==1.0.12"
         },
         "markupsafe": {
             "hashes": [
