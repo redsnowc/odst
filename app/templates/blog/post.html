@@ -125,8 +125,6 @@
 {% endblock %}
 {% block scripts %}
     {{ super() }}
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ce7ecfd2eb555d4"></script>
     <script src="{{url_for('static',filename='ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js')}}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script src="{{ url_for('static', filename='js/bootstrap-validate.js') }}"></script>
