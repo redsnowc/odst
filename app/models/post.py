@@ -12,8 +12,8 @@ from app.libs.extensions import db, whooshee
 @whooshee.register_model('title', 'body')
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(60), index=True)
-    body = db.Column(db.Text, index=True)
+    title = db.Column(db.String(60))
+    body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     can_comment = db.Column(db.Boolean, default=True)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
