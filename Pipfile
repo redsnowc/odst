@@ -24,6 +24,7 @@ flask-debugtoolbar = "*"
 sentry-sdk = {extras = ["flask"],version = "==0.8.0"}
 flask-migrate = "*"
 gunicorn = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3.7"
