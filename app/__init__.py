@@ -162,21 +162,31 @@ def register_commands(app):
     @app.cli.command()
     @click.option('--mail_server', prompt=True, help='Mail server address')
     @click.option('--mail_username', prompt=True, help='Mail server username')
-    @click.option('--mail_password', prompt=True, confirmation_prompt=True,
-                  help='Mail server password')
+    @click.option('--mail_password', prompt=True, help='Mail server password')
     @click.option('--admin_email', prompt=True, help='Admin Email address')
-    def initenv(mail_server, mail_username, mail_password, admin_email):
+    @click.option('--mysql', is_flag=True, help='Use MySQL database.')
+    def initenv(mail_server, mail_username, mail_password, admin_email, mysql):
         """
         Generate .env file for sensitive information
         """
         click.echo('Creating .env file...')
         secret_key = secrets.token_urlsafe(32)
-        with open('.env', 'w') as f:
-            f.write('MAIL_SERVER=' + "'" + mail_server + "'" + '\n'
-                    'MAIL_USERNAME=' + "'" + mail_username + "'" + '\n'
-                    'MAIL_PASSWORD=' + "'" + mail_password + "'" + '\n'
-                    'BLOG_EMAIL=' + "'" + admin_email + "'" + '\n'
-                    'SECRET_KEY=' + "'" + secret_key + "'")
+        if mysql:
+            mysql_password = input('MySQL password:')
+            with open('.env', 'w') as f:
+                f.write('MAIL_SERVER=' + "'" + mail_server + "'" + '\n'
+                        'MAIL_USERNAME=' + "'" + mail_username + "'" + '\n'
+                        'MAIL_PASSWORD=' + "'" + mail_password + "'" + '\n'
+                        'BLOG_EMAIL=' + "'" + admin_email + "'" + '\n'
+                        'SECRET_KEY=' + "'" + secret_key + "'" + '\n'
+                        'DATABASE_URI=' + "'mysql+cymysql://root:" + mysql_password + "@localhost/odst'")
+        else:
+            with open('.env', 'w') as f:
+                f.write('MAIL_SERVER=' + "'" + mail_server + "'" + '\n'
+                        'MAIL_USERNAME=' + "'" + mail_username + "'" + '\n'
+                        'MAIL_PASSWORD=' + "'" + mail_password + "'" + '\n'
+                        'BLOG_EMAIL=' + "'" + admin_email + "'" + '\n'
+                        'SECRET_KEY=' + "'" + secret_key + "'")
         click.echo('Done.')
 
 
