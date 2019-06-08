@@ -233,9 +233,12 @@ def manage_settings():
             admin.set__attrs(form.data)
             db.session.add(admin)
 
-        f = form.blog_index_image.data
-        if f:
-            upload_file(f, 'index_image')
+        index_image = form.blog_index_image.data
+        if index_image:
+            upload_file(index_image, 'index_image')
+        nav_image = form.blog_nav_image.data
+        if nav_image:
+            upload_file(nav_image, 'nav_image')
         flash('博客设置成功', 'success')
         return redirect_back()
 
