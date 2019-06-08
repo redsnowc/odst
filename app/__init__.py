@@ -179,7 +179,7 @@ def register_commands(app):
                         'MAIL_PASSWORD=' + "'" + mail_password + "'" + '\n'
                         'BLOG_EMAIL=' + "'" + admin_email + "'" + '\n'
                         'SECRET_KEY=' + "'" + secret_key + "'" + '\n'
-                        'DATABASE_URI=' + "'mysql+cymysql://root:" + mysql_password + "@localhost/odst'")
+                        'DATABASE_URI=' + "'mysql+cymysql://root:" + mysql_password + "@localhost/blog'")
         else:
             with open('.env', 'w') as f:
                 f.write('MAIL_SERVER=' + "'" + mail_server + "'" + '\n'
