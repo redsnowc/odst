@@ -1,11 +1,14 @@
-<div class="jumbotron jumbotron-fluid" style="background-image: url('{{ url_for('static', filename='images/index_image.jpg') }}')">
+<div class="jumbotron jumbotron-fluid"
+     style="background-image: url('{{ url_for('static', filename='images/index_image.jpg') }}')">
     <div class="container-fluid">
-        <h1 class="display-3">{{ admin.blog_title }}</h1>
-        <p class="lead">{{ admin.blog_sub_title }}</p>
-        <hr class="my-4">
-        <p>如果你也喜欢这个博客，可以点击下方按钮尝试自己搭建。</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </p>
+        <div class="container">
+            <h1 class="display-3" style="color: whitesmoke">{{ admin.blog_title }}</h1>
+            <p class="lead">{{ admin.blog_sub_title }}</p>
+{#            <hr class="my-4">#}
+{#            <p>如果你也喜欢这个博客，可以点击下方按钮尝试自己搭建。</p>#}
+{#            <p class="lead">#}
+{#                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>#}
+{#            </p>#}
+        </div>
     </div>
 </div><br>

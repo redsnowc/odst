@@ -7,8 +7,11 @@
 
 {% block title %}{{ admin.blog_title }}{% endblock %}
 
-{% block content %}
+{% block jumbotron %}
     {% include 'blog/_jumbotron.html' %}
+{% endblock %}
+
+{% block content %}
     <div class="row">
         <div class="col-sm-8">
             {% include 'blog/_posts.html' %}
