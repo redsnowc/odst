@@ -39,7 +39,7 @@ class BaseConfig:
     BLOG_SEARCH_PER_PAGE = 10
     BLOG_SLOW_QUERY_THRESHOLD = 1
 
-    WHOOSHE_MIN_STRING_LEN = 1
+    WHOOSHEE_MIN_STRING_LEN = 1
 
     BLOG_UPLOAD_PATH = os.path.join(basedir, 'uploads')
     BLOG_ALLOWED_IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
