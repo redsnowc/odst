@@ -197,6 +197,8 @@ def register_commands(app):
         """
         click.echo('Copying blog.conf to /etc/supervisor/conf.d...')
         os.system('cp conf/blog.conf /etc/supervisor/conf.d')
+        click.echo('Backups supervisord.conf...')
+        os.system('cp /etc/supervisor/supervisord.conf /etc/supervisor/_supervisord.conf')
         click.echo('Copying supervisord.conf to /etc/supervisor...')
         os.system('cp conf/supervisord.conf /etc/supervisor')
         click.echo('Done.')
