@@ -203,6 +203,21 @@ def register_commands(app):
         os.system('cp conf/supervisord.conf /etc/supervisor')
         click.echo('Done.')
 
+    @app.cli.command()
+    def initnginx():
+        """
+        Build Nginx .conf file, support ubuntu only
+        """
+        click.echo('Removing default file...')
+        os.system('sudo rm /etc/nginx/sites-available/default')
+        click.echo('Copying blog to /etc/nginx/sites-available...')
+        os.system('cp conf/blog /etc/nginx/sites-available')
+        click.echo('Backups nginx.conf...')
+        os.system('cp /etc/nginx/nginx.conf /etc/nginx/_nginx.conf')
+        click.echo('Copying nginx.conf to /etc/nginx...')
+        os.system('cp conf/nginx.conf /etc/nginx')
+        click.echo('Done.')
+
 
 def register_errors(app):
     @app.errorhandler(400)
