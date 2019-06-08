@@ -4,6 +4,7 @@
     :copyright: © 2019 by 秋荏苒 <nuanyang.44@gmail.com>.
     :license: MIT, see LICENSE for more details.
 """
+import os
 import secrets
 
 import click
@@ -187,6 +188,17 @@ def register_commands(app):
                         'BLOG_EMAIL=' + "'" + admin_email + "'" + '\n'
                         'SECRET_KEY=' + "'" + secret_key + "'")
         click.echo('Creating .env file...')
+        click.echo('Done.')
+
+    @app.cli.command()
+    def initsupervisor():
+        """
+        Build supervisor .conf file, support ubuntu only
+        """
+        click.echo('Copying blog.conf to /etc/supervisor/conf.d...')
+        os.system('cp conf/blog.conf /etc/supervisor/conf.d')
+        click.echo('Copying supervisord.conf to /etc/supervisor...')
+        os.system('cp conf/supervisord.conf /etc/supervisor')
         click.echo('Done.')
 
 
