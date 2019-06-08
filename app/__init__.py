@@ -169,7 +169,6 @@ def register_commands(app):
         """
         Generate .env file for sensitive information
         """
-        click.echo('Creating .env file...')
         secret_key = secrets.token_urlsafe(32)
         if mysql:
             mysql_password = input('MySQL password:')
@@ -187,6 +186,7 @@ def register_commands(app):
                         'MAIL_PASSWORD=' + "'" + mail_password + "'" + '\n'
                         'BLOG_EMAIL=' + "'" + admin_email + "'" + '\n'
                         'SECRET_KEY=' + "'" + secret_key + "'")
+        click.echo('Creating .env file...')
         click.echo('Done.')
 
 
