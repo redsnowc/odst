@@ -239,6 +239,9 @@ def manage_settings():
         nav_image = form.blog_nav_image.data
         if nav_image:
             upload_file(nav_image, 'nav_image')
+        favicon = form.blog_favicon.data
+        if favicon:
+            upload_file(favicon, 'favicon')
         flash('博客设置成功', 'success')
         return redirect_back()
 

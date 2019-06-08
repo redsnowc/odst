@@ -107,8 +107,11 @@ class BlogSettingForm(FlaskForm):
         FileAllowed(['jpg'], message='仅支持 JPG 格式')],
         description='可选，仅支持 JPG 格式图片，上传后可能需要清空浏览器缓存才能显示')
     blog_nav_image = FileField('导航栏图标', validators=[
-        FileAllowed(['svg'], message='仅支持 SVG 格式')],
-        description='可选，仅支持 SVG 矢量图格式，上传后可能需要清空浏览器缓存才能显示')
+        FileAllowed(['png'], message='仅支持 PNG 格式')],
+        description='可选，仅支持 PNG 矢量图格式，上传后可能需要清空浏览器缓存才能显示')
+    blog_favicon = FileField('博客favicon.ico图标', validators=[
+        FileAllowed(['ico'], message='仅支持 ICO 格式')],
+        description='可选, 仅支持 ICO 图标格式，上传后可能需要清空浏览器缓存才能显示')
     theme = SelectField(
         label='主题',
         render_kw={
