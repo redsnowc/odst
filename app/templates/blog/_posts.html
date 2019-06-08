@@ -35,7 +35,7 @@
     <div class="tip">
         <h5>No Posts.</h5>
         {% if current_user.is_authenticated %}
-            <a href="#">撰写文章</a>
+            <a href="{{ url_for('web.new_post') }}">撰写文章</a>
         {% endif %}
     </div>
 {% endif %}
