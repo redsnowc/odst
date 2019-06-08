@@ -1,6 +1,6 @@
 # ODST
 
-这是一个轻量的博客应用，后端采用 Flask 框架 前端则采用 Bootstrap，如果对这个博客有兴趣的话，可以参考我上线的个人博客 [素事锦绘](www.pyodst.com)。
+这是一个轻量的博客应用，后端采用 Flask 框架 前端则采用 Bootstrap，如果对这个博客有兴趣的话，可以参考我上线的个人博客 [素事锦绘](https://www.pyodst.com)
 
 该博客应用是我学习 Python 过程中参考《Flask Web 开发与实战》这本书中的博客项目搭建的，如果你对这本书有兴趣的话，可以访问这里查阅 http://helloflask.com/book/。
 
