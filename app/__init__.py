@@ -209,9 +209,9 @@ def register_commands(app):
         Build Nginx .conf file, support ubuntu only
         """
         click.echo('Removing default file...')
-        os.system('sudo rm /etc/nginx/sites-available/default')
-        click.echo('Copying blog to /etc/nginx/sites-available...')
-        os.system('cp conf/blog /etc/nginx/sites-available')
+        os.system('sudo rm /etc/nginx/sites-enabled/default')
+        click.echo('Copying blog to /etc/nginx/sites-enabled...')
+        os.system('cp conf/blog /etc/nginx/sites-enabled')
         click.echo('Backups nginx.conf...')
         os.system('cp /etc/nginx/nginx.conf /etc/nginx/_nginx.conf')
         click.echo('Copying nginx.conf to /etc/nginx...')
