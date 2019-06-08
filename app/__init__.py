@@ -132,7 +132,7 @@ def register_commands(app):
                     blog_title='临时博客名',
                     blog_sub_title='临时副标题',
                     name='临时昵称',
-                    about='临时关于你'
+                    about='临时关于'
                 )
                 admin.set_password(password)
                 db.session.add(admin)
