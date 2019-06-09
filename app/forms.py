@@ -107,7 +107,7 @@ class BlogSettingForm(FlaskForm):
         URL(message='无效的 URL 地址')],
         description='可选，如果同时存在外链首页图片及本地首页图片，则优先外链图片')
     blog_index_image = FileField('博客首页图片', validators=[
-        FileAllowed(['jpg'], message='仅支持 JPG 格式')],
+        Optional(), FileAllowed(['jpg'], message='仅支持 JPG 格式')],
         description='可选，仅支持 JPG 格式图片，上传后可能需要清空浏览器缓存才能显示')
     blog_nav_image = FileField('导航栏图标', validators=[
         FileAllowed(['png'], message='仅支持 PNG 格式')],
