@@ -341,3 +341,19 @@ class AdminTestCase(BaseTestCase):
         ), follow_redirects=True)
         data = response.get_data(as_text=True)
         self.assertIn('lux.css', data)
+
+    def test_index_image_outside_chain(self):
+        response = self.client.post(url_for('web.manage_settings'), data=dict(
+            blog_title='edit title',
+            blog_sub_title='edit sub title',
+            name='edit name',
+            about='edit about',
+            blog_index_image_url='https://pic.superbed.cn/item/5cfcd116451253d178e81e2f.jpg'
+        ), follow_redirects=True)
+        data = response.get_data(as_text=True)
+        self.assertIn('博客设置成功', data)
+        self.assertIn('https://pic.superbed.cn/item/5cfcd116451253d178e81e2f.jpg', data)
+
+        response = self.client.get(url_for('web.index'))
+        data = response.get_data(as_text=True)
+        self.assertIn('5cfcd116451253d178e81e2f.jpg', data)
