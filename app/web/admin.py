@@ -230,7 +230,7 @@ def manage_settings():
     admin = Admin.query.first()
     if form.validate_on_submit():
         with db.auto_commit():
-            admin.set_attrs(form.data)
+            admin.set__attrs(form.data)
             db.session.add(admin)
 
         index_image = form.blog_index_image.data
@@ -250,7 +250,6 @@ def manage_settings():
     form.name.data = admin.name
     form.about.data = admin.about
     form.theme.data = admin.theme
-    form.blog_index_image_url.data = admin.blog_index_image_url
     return render_template('admin/manage_settings.html', form=form)
 
 

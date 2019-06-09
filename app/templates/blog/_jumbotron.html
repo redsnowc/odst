@@ -1,9 +1,5 @@
 <div class="jumbotron jumbotron-fluid"
-     {% if admin.blog_index_image_url %}
-        style="background-image: url('{{ admin.blog_index_image_url }}')"
-     {% else %}
-        style="background-image: url('{{ url_for('static', filename='images/index_image.jpg') }}')">
-     {% endif %}
+     style="background-image: url('{{ url_for('static', filename='images/index_image.jpg') }}')">
     <div class="container-fluid">
         <div class="container">
             <h1 class="display-3" style="color: whitesmoke">{{ admin.blog_title }}</h1>
