@@ -242,7 +242,6 @@ def manage_settings():
         favicon = form.blog_favicon.data
         if favicon:
             upload_file(favicon, 'favicon')
-        flash('博客设置成功', 'success')
         return redirect_back()
 
     form.blog_title.data = admin.blog_title
