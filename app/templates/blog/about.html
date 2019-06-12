@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% block title %}关于 | {{ admin.blog_title }}{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ admin.blog_description }}">
+    <meta name="keywords" content="{{ admin.blog_title }}">
+{% endblock %}
+
 {% block jumbotron %}
     {% include 'blog/_jumbotron.html' %}
 {% endblock %}

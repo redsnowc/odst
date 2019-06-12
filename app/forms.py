@@ -115,6 +115,8 @@ class BlogSettingForm(FlaskForm):
     blog_favicon = FileField('博客favicon.ico图标', validators=[
         FileAllowed(['ico'], message='仅支持 ICO 格式')],
         description='可选, 仅支持 ICO 图标格式，上传后可能需要清空浏览器缓存才能显示')
+    blog_description = TextAreaField('博客描述', validators=[
+        Optional(), Length(0, 200)], description="可选，博客meta标签描述信息")
     theme = SelectField(
         label='主题',
         render_kw={

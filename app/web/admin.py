@@ -251,6 +251,7 @@ def manage_settings():
     form.about.data = admin.about
     form.theme.data = admin.theme
     form.blog_index_image_url.data = admin.blog_index_image_url
+    form.blog_description.data = admin.blog_description
     return render_template('admin/manage_settings.html', form=form)
 
 

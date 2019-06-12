@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}{{ category.name }}{% endblock %}
+{% block title %}{{ category.name }} | {{ admin.blog_title }}{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ admin.blog_description }}">
+    <meta name="keywords" content="{{ category.name }}">
+{% endblock %}
 
 {% block content %}
     <div class="page-header">

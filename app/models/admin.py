@@ -21,6 +21,7 @@ class Admin(Base, UserMixin):
     about = db.Column(db.Text)
     theme = db.Column(db.String(10), default='darkly')
     blog_index_image_url = db.Column(db.String(256))
+    blog_description = db.Column(db.String(200))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
